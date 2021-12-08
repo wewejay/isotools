@@ -300,8 +300,7 @@ def finder():
         print(outputsep)
 
 
-if __name__ == "__main__":
-
+def mppatch():
     # On Windows calling this function is necessary.
     multiprocessing.freeze_support()
 
@@ -336,9 +335,11 @@ if __name__ == "__main__":
                         else:
                             os.putenv('_MEIPASS2', '')
 
-
         # Second override 'Popen' class with our modified version.
         forking.Popen = _Popen
+
+
+if __name__ == "__main__":
 
     while True:
         modeselect = input("Select mode(i for indexer, f for finder, q to quit): ")
