@@ -14,12 +14,14 @@ def psrun(cmd):
 
 
 def mount(path):
+    cmd = "$result = Mount-DiskImage \"{}\" -PassThru ; ($mountResult | Get-Volume).DriveLetter".format(path)
     info = psrun("$result = Mount-DiskImage \"{}\" -PassThru ; $result | Get-Volume".format(path))
-    if info.stderr != b'':
+    output = psrun(cmd)
+    if output.stderr != b'':
         print(info.stderr.decode("utf-8"))
         return False
-    drive = list(str(info.stdout).split()[14])[-1]
-    return drive + ":\\"
+    drive = output.stdout.decode("utf-8").strip();
+    return drive
 
 
 def dismount(path):
